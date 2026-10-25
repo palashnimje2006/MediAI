@@ -1,0 +1,205 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile for authenticated patient, doctor, or administrator",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 25 },
+        "role": { "type": "string", "enum": ["patient", "doctor", "hospital_admin"] },
+        "bloodGroup": { "type": "string", "maxLength": 5 },
+        "allergies": { "type": "array" },
+        "chronicConditions": { "type": "array" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role", "createdAt"]
+    },
+    "Doctor": {
+      "title": "Doctor",
+      "description": "Accredited doctor profile and consultation schedule",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "specialty": { "type": "string", "maxLength": 80 },
+        "qualifications": { "type": "string", "maxLength": 200 },
+        "licenseNumber": { "type": "string", "maxLength": 80 },
+        "experienceYears": { "type": "number" },
+        "hospitalName": { "type": "string", "maxLength": 150 },
+        "hospitalId": { "type": "string", "maxLength": 50 },
+        "city": { "type": "string", "maxLength": 80 },
+        "consultationFee": { "type": "number" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "avatar": { "type": "string" },
+        "about": { "type": "string", "maxLength": 1000 },
+        "isVerified": { "type": "boolean" },
+        "schedule": { "type": "object" },
+        "services": { "type": "array" }
+      },
+      "required": ["id", "userId", "name", "specialty", "licenseNumber", "consultationFee", "isVerified"]
+    },
+    "Hospital": {
+      "title": "Hospital",
+      "description": "Accredited medical center and facilities",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 150 },
+        "city": { "type": "string", "maxLength": 80 },
+        "address": { "type": "string", "maxLength": 300 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "emergencyHotline": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 100 },
+        "rating": { "type": "number" },
+        "image": { "type": "string" },
+        "departments": { "type": "array" },
+        "facilities": { "type": "array" },
+        "hasEmergency24x7": { "type": "boolean" },
+        "doctorCount": { "type": "number" },
+        "establishedYear": { "type": "number" }
+      },
+      "required": ["id", "name", "city", "address", "phone", "emergencyHotline", "hasEmergency24x7"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Consultation booking reservation between patient and doctor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string", "maxLength": 100 },
+        "patientPhone": { "type": "string", "maxLength": 25 },
+        "patientEmail": { "type": "string", "maxLength": 150 },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string", "maxLength": 100 },
+        "doctorSpecialty": { "type": "string", "maxLength": 80 },
+        "hospitalName": { "type": "string", "maxLength": 150 },
+        "hospitalAddress": { "type": "string", "maxLength": 300 },
+        "date": { "type": "string", "maxLength": 20 },
+        "timeSlot": { "type": "string", "maxLength": 20 },
+        "fee": { "type": "number" },
+        "status": { "type": "string", "enum": ["confirmed", "pending", "completed", "cancelled"] },
+        "type": { "type": "string", "enum": ["in-person", "tele-consult"] },
+        "symptoms": { "type": "string", "maxLength": 500 },
+        "cancelReason": { "type": "string", "maxLength": 300 },
+        "prescriptionId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "patientId", "doctorId", "date", "timeSlot", "status", "fee", "createdAt"]
+    },
+    "Prescription": {
+      "title": "Prescription",
+      "description": "Authorized digital prescription issued by doctor for consultation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "appointmentId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string", "maxLength": 100 },
+        "patientAge": { "type": "number" },
+        "patientGender": { "type": "string", "maxLength": 20 },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string", "maxLength": 100 },
+        "doctorSpecialty": { "type": "string", "maxLength": 80 },
+        "doctorLicense": { "type": "string", "maxLength": 80 },
+        "hospitalName": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 20 },
+        "diagnosis": { "type": "string", "maxLength": 300 },
+        "items": { "type": "array" },
+        "advice": { "type": "string", "maxLength": 1000 },
+        "followUpDate": { "type": "string" },
+        "digitalSignature": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "appointmentId", "patientId", "doctorId", "date", "diagnosis", "items", "digitalSignature"]
+    },
+    "MedicalRecord": {
+      "title": "MedicalRecord",
+      "description": "Patient medical record document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "category": { "type": "string" },
+        "date": { "type": "string" },
+        "fileSize": { "type": "string" },
+        "fileType": { "type": "string" },
+        "doctorOrLab": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "patientId", "title", "category", "date"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app notification for appointments and health alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "message": { "type": "string", "maxLength": 500 },
+        "type": { "type": "string" },
+        "date": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "actionUrl": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "type", "date", "isRead"]
+    },
+    "SlotLock": {
+      "title": "SlotLock",
+      "description": "Atomic reservation lock for doctor appointment slot",
+      "type": "object",
+      "properties": {
+        "appointmentId": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "date": { "type": "string" },
+        "timeSlot": { "type": "string" },
+        "booked": { "type": "boolean" },
+        "patientId": { "type": "string" }
+      },
+      "required": ["appointmentId", "doctorId", "date", "timeSlot", "booked"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Registered patient and doctor user accounts"
+    },
+    "/doctors/{doctorId}": {
+      "schema": { "$ref": "#/entities/Doctor" },
+      "description": "Doctor directory and schedule configuration"
+    },
+    "/hospitals/{hospitalId}": {
+      "schema": { "$ref": "#/entities/Hospital" },
+      "description": "Hospital centers directory"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": { "$ref": "#/entities/Appointment" },
+      "description": "Doctor appointment bookings with concurrency guard"
+    },
+    "/prescriptions/{prescriptionId}": {
+      "schema": { "$ref": "#/entities/Prescription" },
+      "description": "Authorized digital prescriptions"
+    },
+    "/medical_records/{recordId}": {
+      "schema": { "$ref": "#/entities/MedicalRecord" },
+      "description": "Patient medical record documents"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "User notifications"
+    },
+    "/slot_locks/{lockId}": {
+      "schema": { "$ref": "#/entities/SlotLock" },
+      "description": "Doctor slot reservation concurrency locks"
+    }
+  }
+}

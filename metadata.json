@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Remix Remix Remix Remix Medi AI — Smart Healthcare \u0026 Doctor Appointment System",
+  "description": "Comprehensive healthcare platform featuring AI health assistant, verified doctor directory, real-time appointment booking, digital prescriptions, medical records, and role-based doctor/patient portals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
